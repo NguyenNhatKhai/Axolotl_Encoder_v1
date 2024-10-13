@@ -7,7 +7,6 @@
 module enc_formatter (
     input clk,
     input rst_n,
-    input FOR_PHASE for_phase,
     input [$clog2(ENC_SYM_NUM + 1) - 1 : 0] for_request,
     input [$clog2(2 * ENC_SYM_NUM - 1) - 1 : 0] for_offset,
     input [ENC_SYM_NUM - 1 : 0][EGF_ORDER - 1 : 0] enc_data,

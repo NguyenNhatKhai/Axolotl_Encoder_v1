@@ -12,7 +12,7 @@ module enc_controller (
     output SEL_PHASE sel_phase,
     output logic [$clog2(ENC_SYM_NUM + 1) - 1 : 0] sel_request,
     output logic [$clog2(ENC_SYM_NUM) - 1 : 0] sel_offset,
-    output FOR_PHASE for_phase,
+    output PRO_PHASE pro_phase,
     output logic [$clog2(ENC_SYM_NUM + 1) - 1 : 0] for_request,
     output logic [$clog2(2 * ENC_SYM_NUM - 1) - 1 : 0] for_offset
 );
@@ -113,28 +113,28 @@ module enc_controller (
 
     always_comb begin
         if (con_counter < RS_MES_LEN % ENC_SYM_NUM) begin
-            for_phase = FOR_IDL;
+            pro_phase = PRO_IDL;
         end else if (con_counter < ENC_SYM_NUM + RS_MES_LEN % ENC_SYM_NUM) begin
-            for_phase = FOR_FIR;
+            pro_phase = PRO_FIR;
         end else if (con_counter < RS_MES_LEN) begin
-            for_phase = FOR_NOR;
+            pro_phase = PRO_NOR;
         end else if (con_counter < RS_MES_LEN + ENC_SYM_NUM) begin
-            for_phase = FOR_LAS;
+            pro_phase = PRO_LAS;
         end else begin
-            for_phase = FOR_IDL;
+            pro_phase = PRO_IDL;
         end
     end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     always_comb begin
-        if (for_phase == FOR_IDL) begin
+        if (pro_phase == PRO_IDL) begin
             for_request = '0;
-        end else if (for_phase == FOR_FIR) begin
+        end else if (pro_phase == PRO_FIR) begin
             for_request = RS_MES_LEN % ENC_SYM_NUM;
-        end else if (for_phase == FOR_NOR) begin
+        end else if (pro_phase == PRO_NOR) begin
             for_request = ENC_SYM_NUM;
-        end else if (for_phase == FOR_LAS) begin
+        end else if (pro_phase == PRO_LAS) begin
             for_request = ENC_SYM_NUM;
         end else begin
             for_request = '0;

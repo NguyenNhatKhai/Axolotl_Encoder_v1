@@ -20,7 +20,7 @@ module encoder (
     logic [$clog2(ENC_SYM_NUM + 1) - 1 : 0] sel_request;
     logic [$clog2(ENC_SYM_NUM) - 1 : 0] sel_offset;
     
-    FOR_PHASE for_phase;
+    PRO_PHASE pro_phase;
     logic [$clog2(ENC_SYM_NUM + 1) - 1 : 0] for_request;
     logic [$clog2(2 * ENC_SYM_NUM - 1) - 1 : 0] for_offset;
     
@@ -39,7 +39,7 @@ module encoder (
         .sel_phase(sel_phase),
         .sel_request(sel_request),
         .sel_offset(sel_offset),
-        .for_phase(for_phase),
+        .pro_phase(pro_phase),
         .for_request(for_request),
         .for_offset(for_offset)
     );
@@ -55,7 +55,6 @@ module encoder (
     enc_formatter formatter (
         .clk(clk),
         .rst_n(rst_n),
-        .for_phase(for_phase),
         .for_request(for_request),
         .for_offset(for_offset),
         .enc_data(enc_data),
@@ -66,7 +65,7 @@ module encoder (
     enc_processor processor (
         .clk(clk),
         .rst_n(rst_n),
-        .for_phase(for_phase),
+        .pro_phase(pro_phase),
         .for_data(for_data),
         .pro_data(pro_data)
     );
@@ -79,6 +78,7 @@ module encoder (
         .sel_offset(sel_offset),
         .enc_data(enc_data),
         .buf_data(buf_data),
+        .pro_phase(pro_phase),
         .pro_data(pro_data),
         .sel_data(sel_data)
     );

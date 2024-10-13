@@ -78,7 +78,7 @@ endmodule
 module enc_processor (
     input clk,
     input rst_n,
-    input FOR_PHASE for_phase,
+    input PRO_PHASE pro_phase,
     input [ENC_SYM_NUM - 1 : 0][EGF_ORDER - 1 : 0] for_data,
     output logic [RS_PAR_LEN - 1 : 0][EGF_ORDER - 1 : 0] pro_data
 );
@@ -86,7 +86,6 @@ module enc_processor (
     logic [RS_PAR_LEN - 1 : 0][EGF_ORDER - 1 : 0] pro_data_reg;
     logic [RS_PAR_LEN - 1 : 0][EGF_ORDER - 1 : 0] pro_data_partly;
     logic [RS_PAR_LEN - 1 : 0][EGF_ORDER - 1 : 0] pro_data_fully;
-    logic [RS_PAR_LEN - 1 : 0][EGF_ORDER - 1 : 0] pro_data_shift;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -105,8 +104,6 @@ module enc_processor (
         .pro_data_partly (pro_data_partly)
     );
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
     enc_pro_fully fully (
         .for_data(for_data),
         .pro_data_reg(pro_data_reg),
@@ -115,29 +112,12 @@ module enc_processor (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    generate
-        if (RS_PAR_LEN > ENC_SYM_NUM) begin
-            always_comb begin
-                pro_data_shift = '0;
-                pro_data_shift[RS_PAR_LEN - 1 -: (RS_PAR_LEN - ENC_SYM_NUM)] = pro_data_reg[RS_PAR_LEN - ENC_SYM_NUM - 1 -: (RS_PAR_LEN - ENC_SYM_NUM)];
-            end
-        end else begin
-            always_comb begin
-                pro_data_shift = '0;
-            end
-        end
-    endgenerate
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
     always_comb begin
-        if (for_phase == FOR_IDL) begin
-            pro_data = pro_data_shift;
-        end else if (for_phase == FOR_FIR) begin
+        if (pro_phase == PRO_FIR) begin
             pro_data = pro_data_partly;
-        end else if (for_phase == FOR_NOR) begin
+        end else if (pro_phase == PRO_NOR) begin
             pro_data = pro_data_fully;
-        end else if (for_phase == FOR_LAS) begin
+        end else if (pro_phase == PRO_LAS) begin
             pro_data = pro_data_fully;
         end else begin
             pro_data = pro_data_reg;

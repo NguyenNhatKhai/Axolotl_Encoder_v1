@@ -30,7 +30,7 @@ localparam logic [RS_PAR_LEN - 1 : 0][$clog2(RS_COD_LEN) - 1 : 0] ENC_CON_STA = 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 localparam SEL_PHA_NUM = 5;
-localparam FOR_PHA_NUM = 4;
+localparam PRO_PHA_NUM = 4;
 
 typedef enum logic [$clog2(SEL_PHA_NUM) - 1 : 0] {
     SEL_IDL,
@@ -40,12 +40,12 @@ typedef enum logic [$clog2(SEL_PHA_NUM) - 1 : 0] {
     SEL_PTM
 } SEL_PHASE;
 
-typedef enum logic [$clog2(FOR_PHA_NUM) - 1 : 0] {
-    FOR_IDL,
-    FOR_FIR,
-    FOR_NOR,
-    FOR_LAS
-} FOR_PHASE;
+typedef enum logic [$clog2(PRO_PHA_NUM) - 1 : 0] {
+    PRO_IDL,
+    PRO_FIR,
+    PRO_NOR,
+    PRO_LAS
+} PRO_PHASE;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
