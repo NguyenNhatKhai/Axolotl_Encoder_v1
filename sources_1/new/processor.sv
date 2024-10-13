@@ -16,7 +16,7 @@ function logic [EGF_ORDER - 1 : 0] egf_mul (
 
     for (int i = 0; i < EGF_ORDER; i ++) begin
         redundant_bit = returned_data[EGF_ORDER - 1];
-        for (int j = EGF_ORDER - 1; j >= 0; j --) begin
+        for (int j = EGF_ORDER - 1; j > 0; j --) begin
             returned_data[j] = returned_data[j - 1] ^ (redundant_bit & EGF_PRI_POL[j]) ^ (data_in_0[j] & data_in_1[EGF_ORDER - i - 1]);
         end
         returned_data[0] = (redundant_bit & EGF_PRI_POL[0]) ^ (data_in_0[0] & data_in_1[EGF_ORDER - i - 1]);

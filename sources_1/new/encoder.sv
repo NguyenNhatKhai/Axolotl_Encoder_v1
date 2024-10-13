@@ -53,8 +53,6 @@ module encoder (
     );
     
     enc_formatter formatter (
-        .clk(clk),
-        .rst_n(rst_n),
         .for_request(for_request),
         .for_offset(for_offset),
         .enc_data(enc_data),
